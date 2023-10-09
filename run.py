@@ -13,7 +13,7 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('elementaryreports')
 
-# Create a dictionary to map worksheet names to their respective objects
+# Create a dictionary to set sheets
 worksheets = {
     'mathematics': SHEET.worksheet('mathematics'),
     'english': SHEET.worksheet('english'),
