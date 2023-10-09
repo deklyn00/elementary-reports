@@ -41,10 +41,23 @@ def display_student_report(student, worksheets):
     main()
 
 
-#creating starting function to initialise application 
+# Function to validate student name
+def is_valid_student_name(student):
+    # Check if the input is a non-empty string
+    return isinstance(student, str) and student.strip() != "" and not any(char.isdigit() for char in student)
+
+# Creating starting function to initialize application
 def main():
-    student = input("Enter student's full name: ")
-    
+    validData = False
+
+    while not validData:
+        student = input("Enter student's full name: ")
+
+        if not is_valid_student_name(student):
+            print("Invalid name. Please enter a valid name")
+        else:
+            validData = True
+
     # Create a dictionary to set the sheets
     worksheets = {
         'mathematics': SHEET.worksheet('mathematics'),
