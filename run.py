@@ -84,7 +84,6 @@ def type_of_pass(grade):
 
 # Function to add a new student and their grades
 def add_student():
-    # Get student name from user input
     student_name = input("Enter student's full name: ")
 
     # Create a dictionary to set the sheets
@@ -96,41 +95,42 @@ def add_student():
         'science': SHEET.worksheet('science'),
         'geography': SHEET.worksheet('geography'),
         'history': SHEET.worksheet('history'),
-        # Add other subjects' worksheets here
     }
-
-    # Check if the student already exists
-    headers = worksheets['mathematics'].row_values(1)
-    if student_name in headers:
-        print(f"{student_name} already exists.")
-        return
-
-    # Get grades for each subject from user input
+     # Initialize a dictionary to store subject grades
     subject_grades = {}
+
+    # Get 4 grades for each subject from user input
     for subject in worksheets.keys():
-        while True:
-            try:
-                grade = int(input(f"Enter {subject} grade (0-25): "))
-                if 0 <= grade <= 25:
-                    subject_grades[subject] = grade
-                    break
-                else:
-                    print("Grade should be between 0 and 25.")
-            except ValueError:
-                print("Invalid input. Please enter an integer grade between 0 and 25.")
+        grades = []
+        for i in range(4):
+            while True:
+                try:
+                    grade = int(input(f"Enter {subject} grade {i + 1} (0-25): "))
+                    if 0 <= grade <= 25:
+                        grades.append(grade)
+                        break
+                    else:
+                        print("Grade should be between 0 and 25.")
+                except ValueError:
+                    print("Invalid input. Please enter an integer grade between 0 and 25.")
+        subject_grades[subject] = grades
 
-    # Add the student name to all worksheets
-    for sheet_name, worksheet in worksheets.items():
-        worksheet.update_value(1, len(headers) + 1, student_name)
+    # Add the student name to the header row of all worksheets
+    for subject, worksheet in worksheets.items():
+        header_row = worksheet.row_values(1)
+        if student_name not in header_row:
+            worksheet.update_cell(1, len(header_row) + 1, student_name)
 
-    # Add grades to the respective worksheets
-    for subject, grade in subject_grades.items():
+    # Place each individual grade in separate columns underneath the student's name
+    for subject, grades in subject_grades.items():
         worksheet = worksheets[subject]
         header_row = worksheet.row_values(1)
         student_column = header_row.index(student_name) + 1
-        worksheet.update_value(2, student_column, grade)
-
+        for i, grade in enumerate(grades):
+            worksheet.update_cell(i + 2, student_column, grade)
     print(f"{student_name} has been added successfully.")
 
-if __name__ == "__main__":
-    main()
+'''if __name__ == "__main__":
+    main()'''
+
+add_student()
