@@ -34,10 +34,10 @@ def display_student_report(student, worksheets):
         if total_grade is not None:
 
 
-            print(f"{sheet_name.capitalize()}: {total_grade}%")
+            print(f"{sheet_name.capitalize()}:\t {total_grade}%")
         else:
 
-            print(f"{sheet_name.capitalize()}: Student not found")
+            print(f"{sheet_name.capitalize()}:\t Grade not found")
     main()
 
 
