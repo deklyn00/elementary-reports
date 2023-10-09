@@ -1,31 +1,58 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Elementary Reports
 
-Welcome USER_NAME,
+![Elementary Reports]()
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
+## Introduction
 
-## Reminders
+Elementary Reports is a terminal-based Python application designed to manage and display student report cards for various subjects. It utilizes the Google Sheets API to store and retrieve student grades.
 
-* Your code must be placed in the `run.py` file
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
+### Goals
 
-## Creating the Heroku app
+1. **Student Reports:** Generate report cards for students with grades in multiple subjects.
+2. **Data Validation:** Ensure data input is valid and within the specified range.
+3. **Add New Students:** Allow the addition of new students with their grades.
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+## Features
 
-1. `heroku/python`
-2. `heroku/nodejs`
+### Add Student Grades
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+The application allows you to add a new student's name and their grades for each subject. You can input four integer values between 0 and 25 for each subject, representing the grades for four assignments.
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+### Get Existing Grades
 
-Connect your GitHub repository and deploy as normal.
+You can search for existing students by name and retrieve their report cards, displaying grades for each subject.
 
-## Constraints
+### Data Validation
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+The application performs data validation to ensure that student names are valid strings and that grades are integers between 0 and 25.
 
------
-Happy coding!
+### Type of Pass
+
+The application also calculates and displays the type of pass (Fail, Pass, Merit, or Distinction) based on the total grade.
+
+## Usage
+
+1. Run the application by executing `python run.py` in your terminal.
+2. Choose to add new student grades or get existing grades.
+
+## Dependencies
+
+- Python
+- gspread
+- google.oauth2
+- Google Sheets API
+- Other libraries as specified in your project
+
+## Credits
+The link provided leads to a page that helped explain different use cases for Google sheets with python.
+![The Comprehensive Guide To Google Sheets With Python](https://understandingdata.com/posts/the-comprehensive-guide-to-google-sheets-with-python/)
+
+### Google Sheets API
+
+This project utilizes the Google Sheets API for storing and retrieving student data.
+
+## Bugs
+No known bugs when running the terminal through Codeanywhere.
+
+## Improvements
+Further features could be added such as deleting students or creating login algorithms to control access and allow students to look up their own grades without being able to do more.
