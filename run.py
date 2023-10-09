@@ -82,5 +82,55 @@ def type_of_pass(grade):
     elif grade >= 80.00:
         return "Distinction"
 
+# Function to add a new student and their grades
+def add_student():
+    # Get student name from user input
+    student_name = input("Enter student's full name: ")
+
+    # Create a dictionary to set the sheets
+    worksheets = {
+        'mathematics': SHEET.worksheet('mathematics'),
+        'english': SHEET.worksheet('english'),
+        'economics': SHEET.worksheet('economics'),
+        'social_studies': SHEET.worksheet('socialstudies'),
+        'science': SHEET.worksheet('science'),
+        'geography': SHEET.worksheet('geography'),
+        'history': SHEET.worksheet('history'),
+        # Add other subjects' worksheets here
+    }
+
+    # Check if the student already exists
+    headers = worksheets['mathematics'].row_values(1)
+    if student_name in headers:
+        print(f"{student_name} already exists.")
+        return
+
+    # Get grades for each subject from user input
+    subject_grades = {}
+    for subject in worksheets.keys():
+        while True:
+            try:
+                grade = int(input(f"Enter {subject} grade (0-25): "))
+                if 0 <= grade <= 25:
+                    subject_grades[subject] = grade
+                    break
+                else:
+                    print("Grade should be between 0 and 25.")
+            except ValueError:
+                print("Invalid input. Please enter an integer grade between 0 and 25.")
+
+    # Add the student name to all worksheets
+    for sheet_name, worksheet in worksheets.items():
+        worksheet.update_value(1, len(headers) + 1, student_name)
+
+    # Add grades to the respective worksheets
+    for subject, grade in subject_grades.items():
+        worksheet = worksheets[subject]
+        header_row = worksheet.row_values(1)
+        student_column = header_row.index(student_name) + 1
+        worksheet.update_value(2, student_column, grade)
+
+    print(f"{student_name} has been added successfully.")
+
 if __name__ == "__main__":
     main()
