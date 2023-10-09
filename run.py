@@ -41,9 +41,8 @@ def display_student_report(student, worksheets):
     main()
 
 
-# Function to validate student name
+# Validate student name
 def is_valid_student_name(student):
-    # Check if the input is a non-empty string
     return isinstance(student, str) and student.strip() != "" and not any(char.isdigit() for char in student)
 
 # Creating starting function to initialize application
@@ -51,7 +50,7 @@ def main():
     validData = False
 
     while not validData:
-        student = input("Enter student's full name: ")
+        student = input("Enter student's full name:\n")
 
         if not is_valid_student_name(student):
             print("Invalid name. Please enter a valid name")
