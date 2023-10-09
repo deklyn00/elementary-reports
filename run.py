@@ -40,7 +40,7 @@ def display_student_report(student, worksheets):
         else:
             print(f"{sheet_name.capitalize()}:\t Grade not found")
     print(f"Average Grade:\t {round(sum_of_grades/7, 0)}%")
-    main()
+    choice()
 
 # Validate student name
 def is_valid_student_name(student):
@@ -84,7 +84,15 @@ def type_of_pass(grade):
 
 # Function to add a new student and their grades
 def add_student():
-    student_name = input("Enter student's full name: ")
+    is_not_student=False
+    nameSheet= SHEET.worksheet('mathematics')
+    current_students= nameSheet.row_values(1)
+    while not is_not_student:
+        student_name = input("Enter student's full name: ")
+        if student_name not in current_students:
+            is_not_student=True
+        else:
+            print("Student already in sheet.")
 
     # Create a dictionary to set the sheets
     worksheets = {
@@ -115,7 +123,7 @@ def add_student():
                     print("Invalid input. Please enter an integer grade between 0 and 25.")
         subject_grades[subject] = grades
 
-    # Add the student name to the header row of all worksheets
+    # Add the student name to all worksheets
     for subject, worksheet in worksheets.items():
         header_row = worksheet.row_values(1)
         if student_name not in header_row:
@@ -130,7 +138,19 @@ def add_student():
             worksheet.update_cell(i + 2, student_column, grade)
     print(f"{student_name} has been added successfully.")
 
-'''if __name__ == "__main__":
-    main()'''
+#Creating initial choice function
+def choice():
+    validEntry= False
+    while not validEntry:
+        answer=input(f'Type "A" to add student grades \nType "G" to get existing grades\n')
+        if answer == 'A':
+            add_student()
+            validEntry= True
+        elif answer == 'G':
+            main()
+            validEntry= True
+        else:
+            print("Invalid Entry")
 
-add_student()
+if __name__ == "__main__":
+    choice()
