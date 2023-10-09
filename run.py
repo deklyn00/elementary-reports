@@ -13,34 +13,22 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('elementaryreports')
 
-# Create a dictionary to set sheets
-worksheets = {
-    'mathematics': SHEET.worksheet('mathematics'),
-    'english': SHEET.worksheet('english'),
-    'economics': SHEET.worksheet('economics'),
-    'social_studies': SHEET.worksheet('socialstudies'),
-    'science': SHEET.worksheet('science'),
-    'geography': SHEET.worksheet('geography'),
-    'history': SHEET.worksheet('history')
-}
-
+# Calculating the total grade
 def calculate_total_grade(student, worksheet):
-    # Find the column containing the student's name
     headers = worksheet.row_values(1)
     try:
         student_column = headers.index(student) + 1
     except ValueError:
         return None
 
-    # Get the grades for the student and calculate the total
     grades = worksheet.col_values(student_column)[1:5]
     total_grade = sum(map(float, grades))
     return total_grade
 
-def display_student_report(student):
+#Getting the report card of the learner
+def display_student_report(student, worksheets):
     print(student)
-    
-    # Loop through worksheets and calculate total grades
+
     for sheet_name, worksheet in worksheets.items():
         total_grade = calculate_total_grade(student, worksheet)
         if total_grade is not None:
@@ -50,7 +38,19 @@ def display_student_report(student):
 
 def main():
     student = input("Enter student's full name: ")
-    display_student_report(student)
+    
+    # Create a dictionary to map worksheet names to their objects
+    worksheets = {
+        'mathematics': SHEET.worksheet('mathematics'),
+        'english': SHEET.worksheet('english'),
+        'economics': SHEET.worksheet('economics'),
+        'social_studies': SHEET.worksheet('socialstudies'),
+        'science': SHEET.worksheet('science'),
+        'geography': SHEET.worksheet('geography'),
+        'history': SHEET.worksheet('history')
+    }
+
+    display_student_report(student, worksheets)
 
 if __name__ == "__main__":
     main()
