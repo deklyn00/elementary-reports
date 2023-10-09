@@ -32,14 +32,20 @@ def display_student_report(student, worksheets):
     for sheet_name, worksheet in worksheets.items():
         total_grade = calculate_total_grade(student, worksheet)
         if total_grade is not None:
+
+
             print(f"{sheet_name.capitalize()}: {total_grade}%")
         else:
-            print(f"{sheet_name.capitalize()}: Student not found")
 
+            print(f"{sheet_name.capitalize()}: Student not found")
+    main()
+
+
+#creating starting function to initialise application 
 def main():
     student = input("Enter student's full name: ")
     
-    # Create a dictionary to map worksheet names to their objects
+    # Create a dictionary to set the sheets
     worksheets = {
         'mathematics': SHEET.worksheet('mathematics'),
         'english': SHEET.worksheet('english'),
